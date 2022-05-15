@@ -31,6 +31,9 @@ function App(): JSX.Element {
     return nameList;
   });
 
+  //I do map again because it doesn't work correctly and it will return false for.. //
+  //all names in the above case(map)//
+
   const checkDataDetailes = useCallback(
     () =>
       data?.map((item: dataTypes) => {
