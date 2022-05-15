@@ -12,6 +12,7 @@ const CheckNetworkConnections = ({ children, netName }: props) => {
   const [isConnected, setIsConnected] = useState<boolean>();
 
   useEffect(() => {
+    netName.forEach(checkNetwork);
     const interval = setInterval(() => {
       netName.forEach(checkNetwork);
     }, 300000);

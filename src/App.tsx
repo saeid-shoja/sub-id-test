@@ -18,7 +18,6 @@ function App(): JSX.Element {
       .get(url)
       .then((res) => {
         let result = res.data;
-        console.log(Object.values(result));
         setData(Object.values(result));
       })
       .catch((e) => console.log(e.message));
