@@ -1,7 +1,6 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import styles from "./CheckNetworkConnections.module.css";
-// import * as debounce from "lodash.debounce";
 
 type props = {
   children: React.ReactNode;
