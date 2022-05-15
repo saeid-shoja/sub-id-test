@@ -1,24 +1,47 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useState } from "react";
+import styles from "./App.module.css";
+import axios from "axios";
+import { dataTypes } from "./types/data";
+import CheckNetworkConnections from "./components/CheckNetworkConnections";
+import GetIcon from "./components/GetIcon";
 
-function App() {
+function App(): JSX.Element {
+  const [data, setData] = useState<object[] | any>([]);
+  const url = "https://sub.id/api/v1/chains/properties";
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = () => {
+    axios
+      .get(url)
+      .then((res) => {
+        let result = res.data;
+        console.log(Object.values(result));
+        setData(Object.values(result));
+      })
+      .catch((e) => console.log(e.message));
+  };
+
+  const names = data.map((item: dataTypes): string[] => {
+    let nameList: string[] = [];
+    nameList.push(item.name.toLocaleLowerCase());
+    return nameList;
+  });
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className={styles.App}>
+      {data?.map((item: dataTypes, index: number) => {
+        if (item.tokenSymbols && item.tokenDecimals) {
+          return (
+            <CheckNetworkConnections netName={names} key={index}>
+              <GetIcon src={item.icon} alt={item.name} />
+              <p>{item.name}</p>
+            </CheckNetworkConnections>
+          );
+        }
+      })}
     </div>
   );
 }

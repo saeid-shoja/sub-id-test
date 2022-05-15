@@ -1,0 +1,39 @@
+.networkConnect,
+.networkNotConnect {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 15rem;
+  height: 15rem;
+  border-radius: 1rem;
+  padding: 1.5em 0;
+}
+
+.networkConnect {
+  background: rgb(165, 236, 165);
+}
+
+.networkNotConnect {
+  background: rgb(240, 136, 136);
+}
+
+.connectionRectangleG,
+.connectionRectangleR {
+  padding: 5px 10px;
+}
+
+.connectionRectangleG {
+  background: green;
+}
+
+.connectionRectangleR {
+  background: red;
+}
+
+.connection {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
