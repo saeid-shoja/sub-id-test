@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import styles from "./App.module.css";
 import axios from "axios";
 import { dataTypes } from "./types/data";
@@ -26,24 +26,28 @@ function App(): JSX.Element {
 
   const names = data.map((item: dataTypes): string[] => {
     let nameList: string[] = [];
-    nameList.push(item.name.toLocaleLowerCase());
+    if (item.tokenSymbols && item.tokenDecimals) {
+      nameList.push(item.name.toLocaleLowerCase());
+    }
     return nameList;
   });
 
-  return (
-    <div className={styles.App}>
-      {data?.map((item: dataTypes, index: number) => {
+  const checkDataDetailes = useCallback(
+    () =>
+      data?.map((item: dataTypes) => {
         if (item.tokenSymbols && item.tokenDecimals) {
           return (
-            <CheckNetworkConnections netName={names} key={index}>
+            <CheckNetworkConnections netName={names} key={item.name}>
               <GetIcon src={item.icon} alt={item.name} />
               <p>{item.name}</p>
             </CheckNetworkConnections>
           );
         }
-      })}
-    </div>
+      }),
+    [data]
   );
+
+  return <div className={styles.App}>{checkDataDetailes()}</div>;
 }
 
 export default App;
