@@ -4,28 +4,29 @@ import styles from "./CheckNetworkConnections.module.css";
 
 type props = {
   children: React.ReactNode;
-  netName: string[];
+  netName: string;
 };
 
 const CheckNetworkConnections = ({ children, netName }: props) => {
   const [isConnected, setIsConnected] = useState<boolean>();
 
   useEffect(() => {
-    netName.forEach(checkNetwork);
+    checkNetwork();
     const interval = setInterval(() => {
-      netName.forEach(checkNetwork);
-    }, 300000);
+      checkNetwork();
+    }, 6000);
     return () => clearInterval(interval);
-  }, []);
+  }, [netName]);
 
-  const checkNetwork = (name: string) => {
+  const checkNetwork = () => {
     axios
-      .get(`https://sub.id/api/v1/check/${name}`)
+      .get(`https://sub.id/api/v1/check/${netName}`)
       .then((res) => {
-        setIsConnected(res.data);
+        res.status === 200 ? setIsConnected(true) : setIsConnected(false);
       })
       .catch((error) => console.log(error.message));
   };
+  console.log(isConnected);
 
   return (
     <div

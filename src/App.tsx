@@ -23,13 +23,13 @@ function App(): JSX.Element {
       .catch((e) => console.log(e.message));
   };
 
-  const names = data.map((item: dataTypes): string[] => {
-    let nameList: string[] = [];
-    if (item.tokenSymbols && item.tokenDecimals) {
-      nameList.push(item.name.toLocaleLowerCase());
-    }
-    return nameList;
-  });
+  // const names = data.map((item: dataTypes): string[] => {
+  //   let nameList: string[] = [];
+  //   if (item.tokenSymbols && item.tokenDecimals) {
+  //     nameList.push(item.name.toLocaleLowerCase());
+  //   }
+  //   return nameList;
+  // });
 
   //I do map again because it doesn't work correctly and it will return false for.. //
   //all names in the above case(map)//
@@ -39,7 +39,7 @@ function App(): JSX.Element {
       data?.map((item: dataTypes) => {
         if (item.tokenSymbols && item.tokenDecimals) {
           return (
-            <CheckNetworkConnections netName={names} key={item.name}>
+            <CheckNetworkConnections netName={item.name} key={item.name}>
               <GetIcon src={item.icon} alt={item.name} />
               <p>{item.name}</p>
             </CheckNetworkConnections>
